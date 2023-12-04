@@ -18,3 +18,10 @@ Product1= Product.create(
     quantity_available: '50'
 )
 
+Product2 = Product.create(
+    name: 'Mac book air',
+    price: '23:99',
+    quantity_available: '40',
+    description: "3g dedicated"
+
+)

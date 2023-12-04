@@ -1,5 +1,5 @@
 class Api::V1::ProductsController < ApplicationController
-    # before_action :set_product, only: [:show, :update, :destroy]
+    before_action :set_product, only: [:show, :update, :destroy]
 
     def index
         @product = Product.all
@@ -7,7 +7,8 @@ class Api::V1::ProductsController < ApplicationController
     end
 
     def show
-        render json: @product
+        product = Product.find(params[:id])
+        render json: product
     end
 
     def create
@@ -21,16 +22,20 @@ class Api::V1::ProductsController < ApplicationController
 
     def update
         if @product.update(product_params)
-          render json: @product
+            render json: { status: 'success', message: 'Product updated successfully', product: @product }
         else
           render json: { status: 'error', message: 'Product was not updated' },status: :unprocessable_entity
         end
     end
     
     def destroy
-        @product.destroy
-        head :no_content
+        if @product.destroy
+          render json: { status: 'success', message: 'Product deleted successfully' }
+        else
+          render json: { status: 'error', message: 'Product was not deleted' }, status: :unprocessable_entity
+        end
     end
+      
 
     private
 

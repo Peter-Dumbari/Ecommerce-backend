@@ -1,6 +1,10 @@
 class Product < ApplicationRecord
-  validates :name, presence: true
-  validates :description, presence: true
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :quantity_available, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+has_many :product_categories
+
+validates :name, :description, :price, :quantity_available, presence: true
+  validates :price, numericality: { greater_than_or_equal_to: 0 }
+  validates :quantity_available, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :name, length: { maximum: 255 }
+  validates :description, length: { maximum: 1000 }
+  validates :name, uniqueness: true
 end
