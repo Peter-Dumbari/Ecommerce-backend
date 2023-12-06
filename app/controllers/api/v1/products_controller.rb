@@ -1,5 +1,6 @@
 class Api::V1::ProductsController < ApplicationController
     before_action :set_product, only: [:show, :update, :destroy]
+    authorize_resource
 
     def index
         @product = Product.all
