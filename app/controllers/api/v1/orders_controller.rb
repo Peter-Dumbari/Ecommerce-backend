@@ -1,60 +1,59 @@
 class Api::V1::OrdersController < ApplicationController
-    before_action :set_user
-    before_action :set_order, only: [:show, :update, :destroy]
-    authorize_resource
-
     # GET /api/v1/orders
-    def index
-        @orders = @user.orders
-        render json: @orders
-    end
-
+     def index
+        order = current_user.orders.includes(:product)
+        render json: order, include: [:product]
+     end
+   
      # GET /api/v1/users/:user_id/orders/1
-    def show
-        render json: @order
+     def show
+        order = current_user.orders.find(params[:id])
+        render json: order
     end
-
+    
     # POST /api/v1/users/:user_id/orders
+  
     def create
-        @order = @user.orders.new(order_params)
-
-        if @order.save
-        render json: @order, message: "Order added to chart", status: :created
+        existing_order = current_user.orders.find_by(order_params)
+        if existing_order
+          render json: { status: 'error', message: 'order Already exists' }, status: :unprocessable_entity
         else
-        render json: @order.errors, status: :unprocessable_entity
+    
+          @order = current_user.orders.new(order_params)
+    
+          if @order.save
+            render json: { status: 'Success', message: 'Order created successfully' }, status: :created
+          else
+            puts @order.errors.full_messages
+            render json: { status: 'error', message: @order.errors.full_messages.to_s,
+                           errors: @order.errors.full_messages },
+                   status: :unprocessable_entity
+          end
         end
-    end
+      end
 
-    # PATCH/PUT /api/v1/users/:user_id/orders/1
-
-    def update
-        if @order.update(order_params)
-        render json: @order
+      def update
+        order = Order.find(params[:id])
+    
+        if order.update(order_params)
+          render json: { message: 'Order successfully updated' }, status: :ok
         else
-        render json: @order.errors, status: :unprocessable_entity
+          render json: { error: 'Failed to update order', details: order.errors.full_messages }, status: :unprocessable_entity
         end
-    end
-
-    # DELETE /api/v1/users/:user_id/orders/1
-    def destroy
-        if @order.destroy
-        render json: {message: "Order deleted successfully"}
+      end
+    
+      def destroy
+        order = Order.find(params[:id])
+        if order.destroy
+          render json: { message: 'Order successfully deleted' }, status: :ok
         else
-        render json: @order.errors, status: :unprocessable_entity
+          render json: { error: 'Failed to delete order', details: order.errors.full_messages }, status: :unprocessable_entity
         end
-    end
+      end
 
     private
 
-  def set_user
-    @user = User.find(params[:user_id])
-  end
-
-  def set_order
-    @order = @user.orders.find(params[:id])
-  end
-
-  def order_params
-    params.require(:order).permit(:order_date, :total_amount)  
-  end
+    def order_params
+        params.require(:order).permit(:order_date, :total_amount, :product_id)  
+    end
 end

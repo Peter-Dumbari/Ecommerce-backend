@@ -28,5 +28,14 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
+
+    return unless user.present?
+
+    can :read, Product
+    can :manage, Order
+
+    return unless user.admin?
+
+    can :manage, :all
   end
 end
