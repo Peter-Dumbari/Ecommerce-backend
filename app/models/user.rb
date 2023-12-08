@@ -6,9 +6,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
-         has_many :orders
+  has_many :orders
 
-         validates :name, presence: true, length: { in: 3..25 }
-         enum role: { user: 'user', admin: 'admin' }
-
+  validates :name, presence: true, length: { in: 3..25 }
+  enum role: { user: 'user', admin: 'admin' }
 end
