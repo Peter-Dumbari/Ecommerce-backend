@@ -7,6 +7,8 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :orders
+  has_many :carts
+  
 
   validates :name, presence: true, length: { in: 3..25 }
   enum role: { user: 'user', admin: 'admin' }
