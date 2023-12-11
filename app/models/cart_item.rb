@@ -13,8 +13,8 @@ class CartItem < ApplicationRecord
   def validate_quantity_available
     return unless product && quantity
 
-    if quantity > product.quantity_available
-      errors.add(:quantity, "is greater than available stock for #{product.name}")
-    end
+    return unless quantity > product.quantity_available
+
+    errors.add(:quantity, "is greater than available stock for #{product.name}")
   end
 end
