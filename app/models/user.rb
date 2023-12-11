@@ -7,7 +7,7 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :orders
-  has_one :cart # Assuming you want to destroy the cart when the user is destroyed
+  has_one :cart # Assuming you want to destroy the cart when the user is destroyed  
 
   validates :name, presence: true, length: { in: 3..25 }
   enum role: { user: 'user', admin: 'admin' }
@@ -17,7 +17,7 @@ class User < ApplicationRecord
   private
 
   def create_user_cart
-    create_cart
-    save
+   create_cart
+  save
   end
 end
