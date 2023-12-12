@@ -1,6 +1,6 @@
 class Api::V1::CartsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_cart, only: %i[show update destroy]
+  before_action :set_cart, only: [:show, :update, :destroy]
 
   def show
     render json: @cart, include: :cart_items

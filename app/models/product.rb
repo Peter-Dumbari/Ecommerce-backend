@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   has_many :product_categories
   has_many :categories, through: :product_categories
   has_many :photos # Use has_many for multiple photos
+  has_many :cart_items
 
   validates :name, :description, :price, :quantity_available, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
