@@ -1,6 +1,20 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Devise routes for user authentication
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # API routes in version 1
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :orders
+      resources :order_items
+      resources :categories
+      resources :product_categories
+      resources :products
+      resources :carts
+      resources :cart_items
+    end
+  end
 end
