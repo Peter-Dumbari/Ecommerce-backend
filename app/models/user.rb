@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :orders
   has_one :cart # Assuming you want to destroy the cart when the user is destroyed
-  
+
   validates :name, presence: true, length: { in: 3..25 }
   enum role: { user: 'user', admin: 'admin' }
 
