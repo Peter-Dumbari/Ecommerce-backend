@@ -1,6 +1,6 @@
 class Cart < ApplicationRecord
   belongs_to :user
-  has_many :cart_items
+  has_many :cart_items, dependent: :destroy
 
   validates :user, presence: true
   validate :validate_cart_items_quantity
@@ -15,3 +15,8 @@ class Cart < ApplicationRecord
     errors.add(:base, 'Cart should have at least one item with a positive quantity')
   end
 end
+
+# class Cart < ApplicationRecord
+#   belongs_to :user
+#   has_many :cart_items, dependent: :destroy
+# end
