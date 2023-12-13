@@ -3,7 +3,7 @@ class Cart < ApplicationRecord
   has_many :cart_items, dependent: :destroy
 
   validates :user, presence: true
-  validate :validate_cart_items_quantity
+  # validate :validate_cart_items_quantity
 
   private
 
