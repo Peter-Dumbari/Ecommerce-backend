@@ -16,24 +16,30 @@ class Api::V1::CartItemsController < ApplicationController
   end
 
   def update
-    @cart_item = current_user.cart.cart_items.find(params[:id])
+    @cart_item = current_user.cart.cart_items.find_by(id: params[:id])
 
-    if @cart_item.update(cart_item_params)
-      render json: @cart_item
+    if @cart_item.nil?
+      render json: { errors: "CartItem not found" }, status: :not_found
+    elsif @cart_item.update(cart_item_params)
+      render json: { message: "CartItem updated successfully", cart_item: @cart_item }
     else
       render json: { errors: @cart_item.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
+
   def destroy
     @cart_item = current_user.cart.cart_items.find(params[:id])
-    @cart_item.destroy
-    head :no_content
-  end
 
+    if @cart_item.destroy
+      render json: { message: "CartItem destroyed successfully" }
+    else
+      render json: { errors: "Failed to destroy CartItem" }, status: :unprocessable_entity
+    end
+  end
   private
 
   def cart_item_params
-    params.require(:cart_item).permit(:product_id, :quantity)
+    params.require(:cart_item).permit(:product_id, :quantity )
   end
 end
