@@ -13,7 +13,7 @@ RSpec.describe CartItem, type: :model do
     expect(cart_item).not_to be_valid
     expect(cart_item.errors[:quantity]).to include("is greater than available stock for #{cart_item.product.name}")
 
-    cart_item.quantity = 5 
+    cart_item.quantity = 5
 
     expect(cart_item).to be_valid
   end
