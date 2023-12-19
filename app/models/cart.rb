@@ -1,6 +1,7 @@
 class Cart < ApplicationRecord
   belongs_to :user
   has_many :cart_items, dependent: :destroy
+  has_many :order_items
 
   validates :user, presence: true
   # validate :validate_cart_items_quantity
