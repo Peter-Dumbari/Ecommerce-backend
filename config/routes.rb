@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   # API routes in version 1
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :orders
+      resources :orders do
+        post 'checkout', on: :collection
+      end      
       resources :order_items
       resources :categories
       resources :product_categories
