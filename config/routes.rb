@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :orders do
         post 'checkout', on: :collection
-      end      resources :order_items
+      end      
+      resources :order_items
       resources :categories
       resources :product_categories
       resources :products
