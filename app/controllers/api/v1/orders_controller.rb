@@ -17,7 +17,7 @@ class Api::V1::OrdersController < ApplicationController
     # Ensure the cart exists before proceeding
     if cart.nil? || cart.cart_items.empty?
       render json: { message: 'Your cart is empty, please add item to cart' }, status: :unprocessable_entity
-      next
+      return
     end
 
     # Merge the cart_id into order_params
