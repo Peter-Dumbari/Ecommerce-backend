@@ -38,7 +38,7 @@ class Api::V1::OrdersController < ApplicationController
         # Handle errors during order_item creation
         render json: { message: 'There was an error creating the order.', errors: order_item.errors.full_messages },
                status: :unprocessable_entity
-        return
+        next
       end
 
       # Clear the cart after successful checkout
