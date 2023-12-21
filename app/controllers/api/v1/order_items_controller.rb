@@ -3,7 +3,7 @@ class Api::V1::OrderItemsController < ApplicationController
     order_item = OrderItem.new(order_item_params)
 
     if order_item.save
-      render json: { message: 'Order item created successfully', order_item: order_item }, status: :created
+      render json: { message: 'Order item created successfully', order_item: }, status: :created
     else
       render json: { errors: order_item.errors.full_messages }, status: :unprocessable_entity
     end
