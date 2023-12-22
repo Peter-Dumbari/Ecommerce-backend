@@ -1,4 +1,6 @@
 class Api::V1::OrdersController < ApplicationController
+  before_action :authenticate_user!, except: [:checkout]
+  load_and_authorize_resource
   # GET /api/v1/orders
   def index
     order = current_user.orders.includes(:cart_items)
