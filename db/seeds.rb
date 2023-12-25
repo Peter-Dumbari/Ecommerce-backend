@@ -36,8 +36,8 @@ accessories_categories = [
   "Networking",
   "Gaming",
   "Storage",
-  "Smart Home Devices",
-  "Phones" 
+  "Smart Home Devices"
+
 ]
 
 accessories_categories.each do |category_name|
